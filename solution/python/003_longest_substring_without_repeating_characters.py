@@ -18,15 +18,11 @@ class Solution:
                 else:
                     temp_str = temp_str[c_index + 1:] + each
 
-        # 是否在最后
+        # 考虑最长数组即为原始数据，和最长数组在末尾的情况
         if len(max_str) < len(temp_str):
             max_str = temp_str
         
-        # 是否在最前
-        if max_str:
-            return len(max_str)
-        else:
-            return len(temp_str)
+        return len(max_str)
 
 if __name__ == "__main__":
     s = Solution()
