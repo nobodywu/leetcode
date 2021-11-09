@@ -62,4 +62,4 @@ if __name__ == "__main__":
     s = Solution()
     # nums1, muns2每个数组内已经排序
     print(s.findMedianSortedArrays2([1,3,8],[4,5,6])) # 中位数为4.5
-    print(s.findMedianSortedArrays([],[1])) # 中位数为4.5
+    print(s.findMedianSortedArrays2([],[1])) # 中位数为1
