@@ -5,8 +5,8 @@ class Solution:
         '''
         start, end =0, 0
         for i in range(len(s)):
-            left1, right1 = self.expandIndex(s, i, i)
-            left2, right2 = self.expandIndex(s, i, i + 1)
+            left1, right1 = self.expandIndex(s, i, i) # 奇数回文的情况
+            left2, right2 = self.expandIndex(s, i, i + 1) #偶数回文的情况
             if right1 - left1 > end - start:
                 start = left1
                 end = right1
@@ -22,6 +22,7 @@ class Solution:
             left -= 1
             right += 1
 
+        # 跳出while前，left多-1，right多+1
         return left + 1, right - 1
 
 if __name__== "__main__":
