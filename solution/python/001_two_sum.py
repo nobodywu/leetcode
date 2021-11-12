@@ -15,11 +15,12 @@ class Solution:
         nums_length = len(nums)
 
         for i in range(nums_length):
-            if i + 1 != nums_length:
-                for j in range(i + 1, nums_length):
+            # if i + 1 != nums_length:
+            # 不需要考虑i + 1 是否等于 len(height)，range(5,5)为空
+            for j in range(i + 1, nums_length):
 
-                    if nums[i] + nums[j] == target:
-                        return [i, j]
+                if nums[i] + nums[j] == target:
+                    return [i, j]
 
 
 
