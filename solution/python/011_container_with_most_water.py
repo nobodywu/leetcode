@@ -5,9 +5,10 @@ class Solution:
         '''
         areas = []
         for i in range(len(height)):
-            if i + 1 != len(height):
-                for j in range(i + 1, len(height)):
-                    areas.append(min(height[i], height[j]) * (j - i))
+            # if i + 1 != len(height):
+            # 不需要考虑i + 1 是否等于 len(height)，range(5,5)为空
+            for j in range(i + 1, len(height)):
+                areas.append(min(height[i], height[j]) * (j - i))
 
         return max(areas)
 
