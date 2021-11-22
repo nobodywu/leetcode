@@ -8,6 +8,9 @@ class Solution:
     def search2(self, nums: list, target: int) -> int:
         '''
         二分法
+
+        将数组一分为二，其中一定有一个是有序的，另一个可能是有序，也能是部分有序。
+        此时有序部分用二分法查找。无序部分再一分为二，其中一个一定有序，另一个可能有序，可能无序。就这样循环. 
         '''
         if not nums:
             return -1
@@ -28,7 +31,7 @@ class Solution:
                     # target在右边，更新左边界
                     m = mid + 1
             else:
-                # 右边[mid, n]是有序的
+                # 右边[mid + 1, n]是有序的
                 if nums[mid] < target <= nums[n]:
                     # target在右边，更新左边界
                     m = mid + 1
