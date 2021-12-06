@@ -21,7 +21,13 @@ class Solution:
         '''
         动态规划方法求解，不使用数组
         '''
-        pass
+        a, b, c = 0, 0, 1
+        for i in range(n):
+            a = b
+            b = c
+            c = a + b
+
+        return c
 
     def climbStairs3(self, n: int) -> int:
         '''
@@ -32,6 +38,6 @@ class Solution:
 
 if __name__ == "__main__":
     s = Solution()
-    print(s.climbStairs(2))
-    print(s.climbStairs(3))
-    print(s.climbStairs(4))
+    print(s.climbStairs2(2))
+    print(s.climbStairs2(3))
+    print(s.climbStairs2(4))
