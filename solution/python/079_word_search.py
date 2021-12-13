@@ -2,13 +2,13 @@ from typing import List
 
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        position = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+        movement = [(0, 1), (1, 0), (0, -1), (-1, 0)]
         m = len(board)
         n = len(board[0])
-        visited = []
+        visited = set()
 
         def check(i, j ,k):
-            print("===", i, j, k)
+            # print("===", i, j, k)
             if board[i][j] != word[k]:
                 return False
 
@@ -21,17 +21,20 @@ class Solution:
             result = False
             # 当前board[i ,j]已经访问过，向周围遍历的时候就不能再查找这个位置
             # board[i, j]的周围是否存在下一个word[k + 1]
-            visited.append([i, j])
-            for pi in position:
-                ii = i + pi[0]
-                jj = j + pi[1]
+            visited.add((i, j))
+            # for pi in movement:
+            #    ii = i + pi[0]
+            #    jj = j + pj[1]
+            for pi, pj in movement:
+                ii = i + pi
+                jj = j + pj
                 if 0 <= ii and ii < m and 0 <= jj and jj < n:
                     if [ii, jj] not in visited:
                         if check(ii, jj, k + 1):
                             result = True
                             break
 
-            visited.remove([i ,j])
+            visited.remove((i ,j))
             return result
         
         
