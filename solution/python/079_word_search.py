@@ -8,8 +8,8 @@ class Solution:
         visited = set()
 
         def check(i, j ,k):
-            # print("===", i, j, k)
             if board[i][j] != word[k]:
+                print("board[{}, {}], 与word[{}]不一致".format(i, j, k))
                 return False
 
             # 以下为当前board[i, j]是work[k]
@@ -17,6 +17,7 @@ class Solution:
                 # 到达word最后一个字符
                 return True
 
+            print("board[{}, {}], 与word[{}]一致".format(i, j, k))
             # 不是word最后一个字符
             result = False
             # 当前board[i ,j]已经访问过，向周围遍历的时候就不能再查找这个位置
@@ -26,13 +27,21 @@ class Solution:
             #    ii = i + pi[0]
             #    jj = j + pj[1]
             for pi, pj in movement:
+                print("检查word[{}]周围元素{},{}".format(k, pi, pj))
                 ii = i + pi
                 jj = j + pj
                 if 0 <= ii and ii < m and 0 <= jj and jj < n:
-                    if [ii, jj] not in visited:
+                    if (ii, jj) not in visited:
                         if check(ii, jj, k + 1):
+                            print("word[{}]周围元素{},{}与word[{}]一致".format(k, pi, pj, k + 1))
                             result = True
                             break
+                        else:
+                            print("word[{}]周围元素{},{}与word[{}]不一致".format(k, pi, pj, k + 1))
+                    else:
+                        print("已经访问过")
+                else:
+                    print("超出边界")
 
             visited.remove((i ,j))
             return result
