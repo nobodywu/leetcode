@@ -37,7 +37,7 @@ class Solution:
             while stack and heights[i] <= heights[stack[-1]]:
                 stack.pop()
             # 当前栈顶元素比栈顶元素低，该栈顶元素就是右侧第一个最小柱子的位置
-            right[i] = stack[-1] if stack else size # size的位置不存在
+            right[i] = stack[-1] if stack else size # 计算面积的时候，size - 1是右侧最后一个不比他小的柱子
             stack.append(i)
 
         # right - 1是右侧最后一个不比他小的柱子
