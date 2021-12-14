@@ -21,12 +21,14 @@ class Tree:
         else:
             if self.a[0].left == None:
                 self.a[0].left = node
-                self.a.append(node) # 新增加的左节点没有左右子节点
+                if node.val != "null" and node.val != None:
+                    self.a.append(node) # 新增加的左节点没有左右子节点
             elif self.a[0].right == None:
                 self.a[0].right = node
-                self.a.append(node) # 新增加的右节点没有左右子节点
+                if node.val != "null" and node.val != None:
+                    self.a.append(node) # 新增加的右节点没有左右子节点
                 self.a.pop(0) # 当前节点左右子节点已满，要去除
-        print(self.a)
+        # print(self.a)
 
 
 if __name__=="__main__":
@@ -35,3 +37,5 @@ if __name__=="__main__":
     for i in L:
         t.add(i)
         # print('节点添加成功')
+
+    print(t.root.right.right.val)
