@@ -1,4 +1,5 @@
 from typing import List
+from algo import heap_sort
 
 
 class Solution:
@@ -18,8 +19,15 @@ class Solution:
         nums.reverse()
         return nums[k - 1]
 
+    def findKthLargest3(self, nums: List[int], k: int) -> int:
+        heap_sort.heapSort(nums)
+
+        return nums[-k]
+
 
 if __name__ == "__main__":
     s = Solution()
     print(s.findKthLargest1(nums=[3, 2, 1, 5, 6, 4], k=2))
     print(s.findKthLargest2(nums=[3, 2, 1, 5, 6, 4], k=2))
+    print(s.findKthLargest3(nums=[3, 2, 1, 5, 6, 4], k=2))
+    print(s.findKthLargest3(nums=[3, 2, 3, 1, 2, 4, 5, 5, 6], k=4))
