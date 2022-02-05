@@ -1,4 +1,5 @@
 from typing import List
+import bisect
 
 
 class Solution:
@@ -19,6 +20,22 @@ class Solution:
 
         return False
 
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        '''
+        二分法，使用python内置的bisect
+        '''
+        if not matrix or 0 == len(matrix):
+            return
+
+        col = len(matrix[0])
+
+        for each in matrix:
+            idx = bisect.bisect_left(each, target)
+            if idx < col and each[idx] == target:
+                return True
+
+        return False
+
 
 if __name__ == "__main__":
     s = Solution()
@@ -27,5 +44,5 @@ if __name__ == "__main__":
          [3, 6, 9, 16, 22],
          [10, 13, 14, 17, 24],
          [18, 21, 23, 26, 30]]
-    print(s.searchMatrix1(m, 20))
-    print(s.searchMatrix1(m, 16))
+    print(s.searchMatrix(m, 20))
+    print(s.searchMatrix(m, 16))
