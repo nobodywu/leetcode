@@ -1,139 +1,73 @@
-from typing import List
-
-
-class UnionFindWithoutWeight:
-    '''
-    数据结构：并查集
-    不带权重
-    https://leetcode-cn.com/problems/number-of-provinces/solution/python-duo-tu-xiang-jie-bing-cha-ji-by-m-vjdr/
-    '''
-
-    def __init__(self):
-        """
-        记录每个节点的父节点
-        """
-        self.father = {}
-
-    def find(self, x):
-        """
-        查找根节点
-        路径压缩
-        """
-        root = x
-
-        while self.father[root] != None:
-            root = self.father[root]
-
-        # 路径压缩
-        while x != root:
-            original_father = self.father[x]
-            self.father[x] = root
-            x = original_father
-
-        return root
-
-    def merge(self, x, y, val):
-        """
-        合并两个节点
-        """
-        root_x, root_y = self.find(x), self.find(y)
-
-        if root_x != root_y:
-            # 这里把y的祖先作为x和y的公共祖先
-            # 也可以把x的祖先作为x和y的公共祖先
-            self.father[root_x] = root_y
-
-    def is_connected(self, x, y):
-        """
-        判断两节点是否相连，即判断x和y的root是否相同
-        """
-        return self.find(x) == self.find(y)
-
-    def add(self, x):
-        """
-        添加新节点。把一个新节点添加到并查集中，那么它的父节点应该为空
-        """
-        if x not in self.father:
-            self.father[x] = None
-
+# 本题是一个带权的并查集问题，定义UnionFindWithWeight类，本题的权重指倍率
+# UnionFindWithWeight类包含find, add, merge, is_connected方法
+# find方法：查找节点x的祖先，压缩路径并更新权重
 
 class UnionFindWithWeight:
     def __init__(self):
-        """
-        记录每个节点的父节点
-        记录每个节点到根节点的权重
-        """
         self.father = {}
-        self.value = {}
+        self.weight = {}
 
     def find(self, x):
-        """
-        查找根节点
-        路径压缩
-        更新权重
-        """
         root = x
-        # 节点更新权重的时候要放大的倍数
-        base = 1
+        rate = 1  # x到祖先的倍率
+
+        # 查找x的祖先root，记录x的father到祖先的rate，x到father的权重可以由self.father[x]获得
         while self.father[root] != None:
             root = self.father[root]
-            base *= self.value[root]
+            rate = self.weight[root] * rate
 
-        # 此时的base代表x到root的总放大倍数
-
+        # 压缩路径，并更新权重
         while x != root:
-            original_father = self.father[x]
-            # 离根节点越远，放大的倍数越高
-            self.value[x] *= base
-            # 减小original_father到root的放大倍数
-            base /= self.value[original_father]
-            #####
-            self.father[x] = root
-            x = original_father
+            cur_father = self.father[x]
+            self.father[x] = root  # 直接将x的father置为root
+            self.weight[x] = self.weight[x] * rate  # 更新x到father的权重
+            rate = rate / self.weight[cur_father]  # 更新rate值，rate记录当前节点father到祖先的权重
+            x = cur_father  # 将当前节点变为x之前的father
 
         return root
 
-    def merge(self, x, y, val):
-        """
-        合并两个节点，val为x和y之间的权重
-        """
-        root_x, root_y = self.find(x), self.find(y)
-
-        if root_x != root_y:
-            self.father[root_x] = root_y
-            # 这里把y的祖先作为x和y的公共祖先，因此要更新x的祖先到y祖先的权重
-            # x到y祖先的距离 = x到x祖先的距离 * x祖先到y祖先的距离
-            # x到y的距离 = val = x到y祖先的距离 / y到y祖先的距离
-            # 因此，x祖先到y祖先的距离 = y到y祖先的距离 * val / x到x祖先的距离
-            self.value[root_x] = self.value[y] * val / self.value[x]
-
-    def is_connected(self, x, y):
-        """
-        两节点是否相连。x和y都有权重，并且右相同的祖先
-        """
-        return x in self.value and y in self.value and self.find(x) == self.find(y)
-
     def add(self, x):
-        """
-        添加新节点，初始化权重为1.0
-        """
+        # 如果节点不存在，那么添加一个节点，
+        # 添加节点即为初始化一个节点，节点的father为None，节点到father的权重（倍率）为1
+
         if x not in self.father:
             self.father[x] = None
-            # 初始化节点的权重倍数
-            self.value[x] = 1.0
+            self.weight[x] = 1
+
+    def merge(self, x, y, val):
+        # x到y的权重为val
+        # 需要先检查x和y是否已经连通
+        root_x = self.find(x)  # 已经压缩了路径，self.weight[x]表示x到root_x的权重
+        root_y = self.find(y)  # 同上
+
+        # 如果x和y的祖先不一样
+        if root_x != root_y:
+            # 把两个祖先相连，将root_x的father设置为root_y
+            self.father[root_x] = root_y
+            # 设置root_x到root_y的距离，根据四边形法则
+            self.weight[root_x] = self.weight[y] * val / self.weight[x]
+
+    def is_connected(self, x, y):
+        # x in self.weight 即为 x in self.weight.keys()
+        return x in self.weight and y in self.weight and self.find(x) == self.find(y)
 
 
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
-        uf = UnionFindWithWeight()
-        for (a, b), val in zip(equations, values):
-            uf.add(a)
-            uf.add(b)
-            uf.merge(a, b, val)
+        ufww = UnionFindWithWeight()
 
-        res = [-1.0] * len(queries)
+        # 根据equations和values构建带权的并查集
+        # zip函数，把对应的元素组成一个tuple
+        for (x, y), val in zip(equations, values):
+            ufww.add(x)
+            ufww.add(y)
+            ufww.merge(x, y, val)
 
+        # ans = [-1.0] * len(queries)
+        ans = [-1.0 for _ in range(len(queries))]
         for i, (a, b) in enumerate(queries):
-            if uf.is_connected(a, b):
-                res[i] = uf.value[a] / uf.value[b]
-        return res
+            if ufww.is_connected(a, b):
+                # a和b有共同的祖先，那么a到b的权重（倍率）为ufww.weight[a] / ufww.weight[b]
+                ans[i] = ufww.weight[a] / ufww.weight[b]
+
+        return ans
