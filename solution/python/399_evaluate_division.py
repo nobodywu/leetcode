@@ -2,6 +2,9 @@
 # UnionFindWithWeight类包含find, add, merge, is_connected方法
 # find方法：查找节点x的祖先，压缩路径并更新权重
 
+from typing import List
+
+
 class UnionFindWithWeight:
     def __init__(self):
         self.father = {}
