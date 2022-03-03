@@ -74,3 +74,11 @@ class Solution:
                 ans[i] = ufww.weight[a] / ufww.weight[b]
 
         return ans
+
+
+if __name__ == "__main__":
+    s = Solution()
+    print(s.calcEquation([["a", "b"], ["e", "f"], ["b", "e"]],
+                         [3.4, 1.4, 2.3],
+                         [["b", "a"], ["a", "f"], ["f", "f"], ["e", "e"], ["c", "c"], ["a", "c"], ["f", "e"]]
+                         ))
