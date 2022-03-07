@@ -14,8 +14,8 @@ class Solution:
         # ord函数返回字符的ASCII编码值，ord("a") = 97
         # 窗口大小为n，先判断s的前n个字符是否与p相等
         for i in range(n):
-            s_count[ord(s[i]) - ord("a")]
-            p_count[ord(p[i]) - ord("a")]
+            s_count[ord(s[i]) - ord("a")] += 1
+            p_count[ord(p[i]) - ord("a")] += 1
 
         if s_count == p_count:
             ans.append(0)
