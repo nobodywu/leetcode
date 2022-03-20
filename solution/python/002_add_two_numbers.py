@@ -1,9 +1,3 @@
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
-
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -20,15 +14,15 @@ class Solution:
         # print(id(body))
         # body = copy.deepcopy(answer)
         # print(id(body))
-
-        body = answer # 这里的赋值为引用，浅拷贝或深拷贝都会创建新的地址
+        # 这里的赋值为引用
+        # 对于链表浅拷贝或深拷贝都会创建新的地址
+        body = answer
         # print(id(body))
 
-        # 进位默认为 0 
+        # 进位默认为 0
         carry = 0
         # 将 l1 和 l2 循环二合一
         while l1 != None or l2 != None:
-            # 利用 Python 中的三元表达式简化取值过程
             if l1 != None:
                 x = l1.val
                 l1 = l1.next
@@ -53,8 +47,9 @@ class Solution:
         # 考虑个最后一位的情况
         if carry > 0:
             body.next = ListNode(carry)
-          
+
         return answer.next
+
 
 if __name__ == "__main__":
     # 2 -> 4 -> 3
@@ -69,10 +64,9 @@ if __name__ == "__main__":
 
     s = Solution()
     a = s.addTwoNumbers(nodelist1, nodelist2)
-    
+
     if None != a:
         print(a.val)
         while None != a.next:
             a = a.next
             print(a.val)
-
