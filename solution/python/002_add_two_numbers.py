@@ -5,7 +5,18 @@ class ListNode:
 
 
 class Solution:
+
+    '''
+    链表
+    '''
+
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        # 初始化一个链表 answer = ListNode(0)
+        # 初始化一个变量指向answer的地址，body = answer。body向后对节点赋值时，answer保持在首节点不动
+        #
+        # 时间复杂度O(max(M, N))，M和N分别为两个链表的长度
+        # 空间复杂度O(1)
+
         # 给要返回的链表建个表头，这样通过 answer.next 即可拿到要返回的链表
         answer = ListNode(0)
 
