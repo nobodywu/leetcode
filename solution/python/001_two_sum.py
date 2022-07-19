@@ -47,10 +47,11 @@ class Solution:
         # 遍历时，先判断target - num是否在字典的key中
         #     - 如果是，返回[当前索引，dict.get(target - num)]
         # 然后构造字典。
-        # 注意：因为不可以使用重复的元素，构造字典要在判断之后
+        # 注意：考虑输入nums = [3, 3], target = 6的情况，构造字典要在判断之后
+        #      第二次a[3] = 1时会覆盖a[3] = 0
         # 时间复杂度O(N)
         # 空间复杂度O(1)
-
+        
         a = {}
         for i, num in enumerate(nums):
             diff_index = a.get(target - num)
